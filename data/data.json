@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Laptop",
+    "price": 80000,
+    "rating": 4.5,
+    "category": "Electronics",
+    "stock": 10
+  },
+  {
+    "id": 2,
+    "name": "Headphones",
+    "price": 3000,
+    "rating": 4.2,
+    "category": "Electronics",
+    "stock": 25
+  },
+  {
+    "id": 3,
+    "name": "Running Shoes",
+    "price": 4500,
+    "rating": 4.6,
+    "category": "Sports",
+    "stock": 15
+  },
+  {
+    "id": 4,
+    "name": "Backpack",
+    "price": 1500,
+    "rating": 4.1,
+    "category": "Accessories",
+    "stock": 30
+  },
+  {
+    "id": 5,
+    "name": "Smartphone",
+    "price": 25000,
+    "rating": 4.7,
+    "category": "Electronics",
+    "stock": 8
+  }
+]

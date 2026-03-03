@@ -1,0 +1,16 @@
+{
+  "name": "practice-api",
+  "version": "1.0.0",
+  "description": "\"My own API to understand how backend works\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anubhav Sharma",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.2.3"
+  }
+}
