@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -31,6 +32,14 @@ const userSchema = new mongoose.Schema({
       message: "Password and Password confirm fields do not match",
     },
   },
+  role: {
+    type: String,
+    enum: ["admin", "user"],
+    default: user,
+  },
+  passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date,
 });
 //SECURING THE PASSWORD IN DATABASE
 userSchema.pre("save", async function () {
@@ -50,6 +59,31 @@ userSchema.methods.correctPassword = async function (
   userPassword,
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
+};
+userSchema.methods.changedPassword = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10,
+    );
+    return JWTTimestamp < changedTimestamp;
+  }
+  return false;
+};
+userSchema.methods.createResetPasswordToken = function () {
+  //CREATE THE REESET TOKEN
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  //hash it
+  this.passwordResetToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  //passresetokenexpires
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
 };
 const User = mongoose.model("User", userSchema);
 module.exports = User;

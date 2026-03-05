@@ -1,15 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const productController = require("./../controllers/productController");
-
+const authController = require("./../controllers/authController");
 router
   .route("/")
-  .get(productController.getAllProducts)
+  .get(authController.protect, productController.getAllProducts)
   .post(productController.createProduct);
 router
   .route("/:id")
   .get(productController.getProduct)
   .patch(productController.updateProducts)
-  .delete(productController.deleteProduct);
+  .delete(
+    authController.protect,
+    authController.restrictTo("admin"),
+    productController.deleteProduct,
+  );
 
 module.exports = router;
